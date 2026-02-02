@@ -1,0 +1,203 @@
+# Implementation Plan - BOYS Expense Tracker
+
+## Goal Description
+Build a "stunning" high-fidelity mobile web application prototype for the "BOYS" expense tracker. The app will visually match the generated Glassmorphism design, featuring a daily dashboard, transaction list, and distinct "BOYS" branding (Mint Green/Soft Coral).
+
+## User Review Required
+> [!NOTE]
+> This is a frontend prototype. Data persistence and backend integration are out of scope. The focus is on Visual Excellence and UI interactions.
+
+## Proposed Changes
+
+### Core Structure
+#### [NEW] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Main container simulating a mobile device frame (for desktop viewing) or full width (on mobile).
+- Semantic sections: `<header>`, `<main>`, `<nav>`, `<aside>` (for modals).
+- Use of SVG icons for lightweight and crisp visuals.
+
+#### [NEW] [styles.css](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css)
+- **Design System**:
+    - Colors: Mint Green (`#E0F2F1`, `#26A69A`), Soft Coral (`#FFEBEE`, `#EF5350`), Gradient Backgrounds.
+    - Glassmorphism: `backdrop-filter: blur(10px)`, semi-transparent white backgrounds with border details.
+    - Typography: System fonts (SF Pro equivalent) for that native iOS feel.
+- **Layout**: Flexbox and Grid for component alignment.
+- **Animations**: Soft transitions for hover states, modal appearance, and list loading.
+
+#### [NEW] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Event listeners for Floating Action Button (FAB) to open "Add Expense" modal.
+- Tab switching logic (Daily/Monthly/Yearly) to toggle visible content.
+- Simple ripple or click effects for feedback.
+
+### Key Components to Build
+1.  **Dashboard Header**: App branding and Notification icon.
+2.  **Summary Cards**:
+    - "Today's Spending" card (Large number, comparison).
+    - "Budget" circular indicator (CSS Conic gradients).
+3.  **Transactions List**:
+    - Individual list items with Icon circle, Title, Subtitle (time), and Amount (color-coded).
+4.  **Bottom Navigation**:
+    - Fixed position container.
+    - Glassmorphism effect.
+    - Central FAB with subtle shadow/glow.
+5.  **Add Expense Modal**:
+    - Slide-up bottom sheet or centered overlay.
+    - Numeric keypad layout.
+
+## Verification Plan
+### Automated Tests
+- None planned for this visual prototype.
+
+### Manual Verification
+- **Visual Check**: Open [index.html](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html) in the browser tool to verify layout matches the "stunning" prompt description.
+- **Interaction**: Click FAB to ensure Modal opens. Click Tabs to verify active state changes.
+- **Responsiveness**: Ensure it looks good on the simulated mobile viewport.
+
+## Phase 5: Edit & Delete Actions
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- **Delete**: Remove item from `state.transactions`, re-render dashboard and current modal list.
+- **Edit**:
+    - Add `state.editingId` tracking.
+    - [startEdit(id)](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#367-382): Find transaction, fill form inputs, open modal, change "Save" button text to "Update".
+    - [saveTransaction](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#488-546): Check `state.editingId`. If set, update existing object; else create new.
+
+## Phase 6: Persistence & Filtering
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- **LocalStorage**:
+    - [saveState()](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#107-115): Serialize `state.transactions` to `localStorage`.
+    - [loadState()](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#68-87): Read from `localStorage` on load.
+- **Filtering**:
+    - Track `state.currentView` ('daily', 'monthly', 'yearly').
+    - Update `toggleBtns` listeners to change `state.currentView`.
+    - [getFilteredTransactions()](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#192-202): Return transactions that match the current view's time range (e.g., today, this month).
+    - Update [renderTransactions](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#433-487) and [updateDashboard](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#257-287) to use filtered data.
+
+### [MODIFY] [styles.css](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css)
+- No major changes, just ensure toggle states look correct.
+
+## Phase 7: Stats View
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Add `<div id="statsView" class="view-container" style="display:none;">`.
+- Add simplified chart structure (using CSS flex bars).
+
+### [MODIFY] [styles.css](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css)
+- Style the Stats container.
+- Create `.bar-chart` styles with animated bars.
+
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Update Bottom Nav listeners to toggle `display: block/none` for `#homeView` and `#statsView`.
+- [renderStats()](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#288-351): Calculate totals per category and set bar heights/colors.
+
+## Phase 8: Budget Management
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Add `#budgetView` container.
+- Add simple input form: "Set Daily Budget".
+
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Wire up the 'Wallet' icon to show `#budgetView`.
+- Update `state` to persist `budget`.
+- When budget changes, re-calculate dashboard percentages.
+
+## Phase 9: Settings & Data
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Add `#settingsView`.
+- Add simplified list of ACTIONS: "Reset All Data", "Export JSON".
+
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Wire up 'Settings' icon.
+- Implement `resetData()`: Clear localStorage and reload.
+- Implement `exportData()`: Trigger file download.
+
+## Phase 10: Custom Categories
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Add a special "Add (+)" chip to the `.category-chips` container.
+
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Update `state` to include `categories` array (load from LS or default).
+- Create [renderCategories()](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#215-256) function to inject chips dynamically.
+- Implement `addCategory()` logic: Prompt user, add to state, save, re-render.
+
+## Phase 11: Mock Inputs (Polish)
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Select `.action-chip` buttons (Mic/Camera).
+- Add click handlers to simulate action.
+- Show `alert` or console log: "Scanning Receipt..." / "Listening...".
+- Add simulated delay and autofill sample text for "Voice" input.
+
+## Phase 12: Polish & Accessibility
+### [MODIFY] [styles.css](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css)
+- Add simple `@keyframes fade-in-up` animation.
+- Apply animation to `.view-container` when active.
+- Add `:focus-visible` styles for better keyboard accessibility.
+
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Add `aria-label` attributes to:
+    - `.icon-btn` (Notifications)
+    - `.view-toggle` buttons
+    - `.nav-item` buttons
+    - `.fab` (Add Expense)
+    - `.num-key` buttons (especially backspace)
+    - `.close-modal` buttons
+
+## Phase 13: PWA Integration
+### [NEW] [icon.png](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/icon.png)
+- Generate a 512x512 app icon.
+
+### [NEW] [manifest.json](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/manifest.json)
+- Define standard PWA manifest (name, short_name, theme_color, background_color, display: standalone).
+
+### [NEW] [sw.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/sw.js)
+- Implement cache-first strategy for static assets (index.html, styles.css, app.js, icon.png).
+
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Link [manifest.json](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/manifest.json).
+- Add `<meta name="apple-mobile-web-app-capable" content="yes">`.
+- Add `<link rel="apple-touch-icon">`.
+
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Register [sw.js](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/sw.js) on load.
+
+## Phase 14: Dark Mode Support
+### [MODIFY] [styles.css](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css)
+- Define `[data-theme="dark"]` overrides for:
+  - `--bg-gradient-start` / `--bg-gradient-end`
+  - `--glass-bg`
+  - `--text-primary` / `--text-secondary`
+  - `--card-bg`
+
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Add "Dark Mode" toggle switch (checkbox) to Settings view.
+
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Check `localStorage` for theme preference on load.
+- Apply `data-theme` attribute to `document.documentElement`.
+- Handle toggle updates and save to `localStorage`.
+
+## Phase 15: PDF Export
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Add CDN scripts for `jspdf` and `jspdf-autotable`.
+- Add "Export PDF" button to Settings card.
+
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Implement `exportPDF()` function.
+- Create summary table (Total Spent, Budget Status).
+- Create transaction table (Date, Category, Remark, Amount).
+- Save generated PDF.
+
+- Add "Currency" dropdown/modal trigger to Settings.
+- Replace hardcoded `₹` with `<span class="currency-symbol-display">₹</span>` classes where needed for dynamic updates.
+
+## Phase 16: Search Functionality
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Insert a glass-styled Search Input above the transaction list in Home View.
+- Add search icon.
+
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Add event listener for `input` on search field.
+- Filter `state.transactions` based on query (title or note).
+- Re-render transaction list with filtered results.
+- Show specific "No results" message if filter returns empty.
+
+
+
+
+

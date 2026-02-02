@@ -1,0 +1,32 @@
+# BOYS Expense Tracker - Walkthrough
+
+I have successfully built the high-fidelity **BOYS Expense Tracker** prototype. The visual style follows the "Glassmorphism" trend with a Mint Green and Soft Coral palette, as requested.
+
+## Completed Features
+- **Dashboard**: "Today's Spending" card and a CSS-based circular Budget Chart.
+- **Glassmorphism UI**: Frosted glass effects on cards and the bottom navigation bar.
+- **Transactions List**: Clean list with category icons, timestamps, and amounts.
+- **Visual Polish**: Gradient backgrounds, Inter typography, and iOS-style status bar placeholder.
+- **Interactive Elements**:
+    - **Add Expense Modal**: Floating Action Button (FAB) opens a full-screen glass modal.
+    - **Numpad**: Custom styling for numeric input.
+    - **View Toggles**: Buttons to switch between Daily, Monthly, and Yearly (Visual state only).
+
+## How to Test
+Since this is a client-side prototype, you can run it directly in your browser.
+
+1.  **Open [index.html](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)**: Open the file in Chrome, Safari, or Edge.
+2.  **Mobile View**: For the best experience, open Developer Tools (F12) and toggle the **Device Toolbar** (Ctrl+Shift+M) to simulate an iPhone 14 Pro or similar device.
+3.  **Interactions**:
+    - Click the **+** (FAB) button to see the "Add Expense" modal slide up.
+    - Type numbers on the keypad to see the amount update.
+    - Click **Save Expense** to see the button animation and modal close.
+    - Click the bottom navigation icons to see the active state change.
+
+## Files Created
+- [index.html](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html) - Application structure.
+- [styles.css](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css) - All styling, variables, and animations.
+- [app.js](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js) - UI Logic.
+
+> [!WARNING]
+> The browser verification tool encountered a system configuration error, so I could not capture automated screenshots. Please visually verify the "Glassmorphism" effect in your local browser.

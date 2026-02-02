@@ -1,0 +1,22 @@
+# Tasks: BOYS Expense Tracker Implementation
+
+- [/] Project Setup & Planning <!-- id: 0 -->
+    - [x] Create task.md <!-- id: 1 -->
+    - [ ] Create implementation_plan.md <!-- id: 2 -->
+- [ ] Core Structure & Styles <!-- id: 3 -->
+    - [ ] Create `index.html` basic structure <!-- id: 4 -->
+    - [ ] Create `styles.css` (CSS variables, reset, typography, gradients) <!-- id: 5 -->
+    - [ ] Import/Setup Fonts (Inter/System fonts) <!-- id: 6 -->
+- [ ] Component Implementation <!-- id: 7 -->
+    - [ ] Implement Glassmorphism Card styles <!-- id: 8 -->
+    - [ ] Build Dashboard (Daily View, "Today's Spending") <!-- id: 9 -->
+    - [ ] Build Budget Progress Chart (CSS based) <!-- id: 10 -->
+    - [ ] Build Transaction List items with icons <!-- id: 11 -->
+    - [ ] Build Bottom Navigation Bar & FAB <!-- id: 12 -->
+- [ ] Interactivity & Features <!-- id: 13 -->
+    - [ ] Create "Add Expense" Modal structure <!-- id: 14 -->
+    - [ ] Implement View Toggles (Daily/Monthly/Yearly - UI only) <!-- id: 15 -->
+    - [ ] Add simple JS for Modal open/close and View switching <!-- id: 16 -->
+- [ ] Verification <!-- id: 17 -->
+    - [ ] Verify responsive layout (Mobile focus) <!-- id: 18 -->
+    - [ ] Check visual fidelity against requirements <!-- id: 19 -->

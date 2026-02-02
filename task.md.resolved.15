@@ -1,0 +1,53 @@
+# Tasks: BOYS Expense Tracker Implementation
+
+- [x] Project Setup & Planning <!-- id: 0 -->
+    - [x] Create task.md <!-- id: 1 -->
+    - [x] Create implementation_plan.md <!-- id: 2 -->
+- [x] Core Structure & Styles <!-- id: 3 -->
+    - [x] Create [index.html](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html) basic structure <!-- id: 4 -->
+    - [x] Create [styles.css](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css) (CSS variables, reset, typography, gradients) <!-- id: 5 -->
+    - [x] Import/Setup Fonts (Inter/System fonts) <!-- id: 6 -->
+- [x] Component Implementation <!-- id: 7 -->
+    - [x] Implement Glassmorphism Card styles <!-- id: 8 -->
+    - [x] Build Dashboard (Daily View, "Today's Spending") <!-- id: 9 -->
+    - [x] Build Budget Progress Chart (CSS based) <!-- id: 10 -->
+    - [x] Build Transaction List items with icons <!-- id: 11 -->
+    - [x] Build Bottom Navigation Bar & FAB <!-- id: 12 -->
+- [x] Interactivity & Features <!-- id: 13 -->
+    - [x] Create "Add Expense" Modal structure <!-- id: 14 -->
+    - [x] Implement View Toggles (Daily/Monthly/Yearly - UI only) <!-- id: 15 -->
+    - [x] Add simple JS for Modal open/close and View switching <!-- id: 16 -->
+- [x] Verification <!-- id: 17 -->
+    - [x] Verify responsive layout (Mobile focus) <!-- id: 18 -->
+    - [x] Check visual fidelity against requirements <!-- id: 19 -->
+- [x] Functional Logic (New) <!-- id: 20 -->
+    - [x] Implement `addTransaction` function to render new items <!-- id: 21 -->
+    - [x] Update "Today's Spending" total dynamically <!-- id: 22 -->
+    - [x] Update Budget Progress Circle dynamically <!-- id: 23 -->
+    - [x] Toggle Empty State based on list count <!-- id: 24 -->
+- [x] Category Grouping (Request) <!-- id: 25 -->
+    - [x] Update [renderTransactions](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#260-320) to aggregate by category <!-- id: 26 -->
+    - [x] Display category totals instead of individual items <!-- id: 27 -->
+- [x] Category Details & Remarks (Request) <!-- id: 28 -->
+    - [x] Add "Note/Remark" input to Add Expense Modal <!-- id: 29 -->
+    - [x] Create "Category Details" Modal structure <!-- id: 30 -->
+    - [x] Implement click handler on Category Groups to open Details Modal <!-- id: 31 -->
+    - [x] Render individual transactions with time and remarks in Details Modal <!-- id: 32 -->
+- [x] Edit & Delete Actions (Request) <!-- id: 33 -->
+    - [x] Add Edit/Delete icons to detail text items <!-- id: 34 -->
+    - [x] Implement [deleteTransaction](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#169-185) logic <!-- id: 35 -->
+    - [x] Implement [startEditTransaction](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#186-205) logic (pre-fill modal) <!-- id: 36 -->
+    - [x] Update [saveTransaction](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#321-379) to handle updates vs inserts <!-- id: 37 -->
+- [x] Persistence & Filtering (New) <!-- id: 38 -->
+    - [x] Implement `localStorage` to save/load transactions <!-- id: 39 -->
+    - [x] Implement `filterTransactions` based on Daily/Monthly/Yearly tabs <!-- id: 40 -->
+    - [x] Update dashboard totals to reflect currently selected view <!-- id: 41 -->
+- [x] Stats View (New) <!-- id: 42 -->
+    - [x] Create [Stats](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#124-168) view container in [index.html](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html) (hidden by default) <!-- id: 43 -->
+    - [x] Implement Bottom Nav logic to toggle between Home and Stats <!-- id: 44 -->
+    - [x] Build CSS-based Bar Chart for Category Spending <!-- id: 45 -->
+    - [x] Implement `updateStats` function to render charts dynamically <!-- id: 46 -->
+- [ ] Budget Management (New) <!-- id: 47 -->
+    - [ ] Create `Budget` view container with input for Daily/Monthly targets <!-- id: 48 -->
+    - [ ] Implement Bottom Nav logic for 'Wallet' icon <!-- id: 49 -->
+    - [ ] Add persistence for Budget value <!-- id: 50 -->

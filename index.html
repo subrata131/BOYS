@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BOYS Expense Tracker</title>
+
+    <!-- Fonts: Inter (Replacement for SF Pro) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons: Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="boys_app_icon.png">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <h1>BOYS</h1>
+            </div>
+            <button class="icon-btn" aria-label="Notifications">
+                <ion-icon name="notifications-outline"></ion-icon>
+            </button>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="dashboard scroll-container">
+
+            <!-- Views Toggle -->
+            <!-- Note: Visual only for now, logic to be added -->
+            <div class="view-toggle">
+                <button class="toggle-btn active" data-view="daily">Daily</button>
+                <button class="toggle-btn" data-view="monthly">Monthly</button>
+                <button class="toggle-btn" data-view="yearly">Yearly</button>
+            </div>
+
+            <!-- Swipeable Cards Container -->
+            <div class="cards-wrapper">
+
+                <!-- Card 1: Today's Spending -->
+                <article class="glass-card spending-card">
+                    <div class="card-header">
+                        <span class="label">Today's Spending</span>
+                    </div>
+                    <div class="amount-display">
+                        <span class="currency">₹</span>0.00
+                    </div>
+                    <div class="budget-status">
+                        <span class="sub-label">Daily Budget: ₹200.00</span>
+                    </div>
+                </article>
+
+                <!-- Card 2: Budget Progress (Circular) -->
+                <article class="glass-card budget-card">
+                    <div class="circular-chart-container">
+                        <div class="circular-chart" style="--percentage: 0">
+                            <div class="inner-circle">
+                                <span class="percent">0%</span>
+                                <span class="label">Spent</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Stats View Container -->
+            <div id="statsView" class="view-container" style="display: none;">
+                <div class="header">
+                    <div>
+                        <div class="sub-label">Spending Breakdown</div>
+                        <div class="date-label">This Month</div>
+                    </div>
+                </div>
+
+                <!-- CSS Bar Chart -->
+                <div class="chart-card glass-card">
+                    <h3>Category Analysis</h3>
+                    <div class="bar-chart-container" id="barChart">
+                        <!-- Bars injected by JS -->
+                    </div>
+                </div>
+
+                <div class="transaction-list" id="statsList">
+                    <!-- Summary list -->
+                </div>
+            </div>
+
+            <!-- Budget View Container -->
+            <div id="budgetView" class="view-container" style="display: none;">
+                <div class="header">
+                    <div>
+                        <div class="sub-label">Wallet Settings</div>
+                        <div class="date-label">Manage Budget</div>
+                    </div>
+                </div>
+
+                <div class="glass-card" style="padding: 24px; margin-top: 20px; text-align: center;">
+                    <div class="icon-box category-transport"
+                        style="margin: 0 auto 16px; width: 60px; height: 60px; font-size: 24px;">
+                        <ion-icon name="wallet"></ion-icon>
+                    </div>
+                    <h3 style="margin-bottom: 8px;">Daily Budget Goal</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">
+                        Set your daily spending limit. This acts as the baseline for your monthly and yearly targets.
+                    </p>
+
+                    <div class="note-container" style="margin-bottom: 24px;">
+                        <span
+                            style="position: absolute; left: 40px; top: 14px; color: var(--text-secondary); font-weight: 600;">₹</span>
+                        <input type="number" id="budgetInput" class="note-input"
+                            style="text-align: left; padding-left: 30px;" placeholder="200">
+                    </div>
+
+                    <button class="save-btn" id="saveBudgetBtn">Update Budget</button>
+                </div>
+            </div>
+
+            <!-- Settings View Container -->
+            <div id="settingsView" class="view-container" style="display: none;">
+                <div class="header">
+                    <div>
+                        <div class="sub-label">Preferences</div>
+                        <div class="date-label">Settings</div>
+                    </div>
+                </div>
+
+                <div class="settings-list" style="margin-top: 20px;">
+                    <!-- Help & Support -->
+                    <div class="glass-card"
+                        style="padding: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;"
+                        id="helpBtn" role="button" aria-label="Contact Support">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="icon-box" style="background: rgba(102, 187, 106, 0.2); color: #66BB6A;">
+                                <ion-icon name="mail"></ion-icon>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 16px;">Help & Support</div>
+                                <div style="font-size: 13px; color: var(--text-secondary);">subratadas991915@gmail.com
+                                </div>
+                            </div>
+                        </div>
+                        <ion-icon name="chevron-forward" style="color: var(--text-secondary);"></ion-icon>
+                    </div>
+
+                    <!-- Dark Mode -->
+                    <div class="glass-card"
+                        style="padding: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="icon-box" style="background: rgba(149, 117, 205, 0.2); color: #9575CD;">
+                                <ion-icon name="moon"></ion-icon>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 16px;">Dark Mode</div>
+                                <div style="font-size: 13px; color: var(--text-secondary);">Switch theme</div>
+                            </div>
+                        </div>
+                        <!-- Toggle Switch -->
+                        <label class="switch"
+                            style="position: relative; display: inline-block; width: 50px; height: 28px;">
+                            <input type="checkbox" id="darkModeToggle" style="opacity: 0; width: 0; height: 0;">
+                            <span class="slider"
+                                style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;">
+                                <span class="slider-round"
+                                    style="position: absolute; content: ''; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                            </span>
+                        </label>
+                    </div>
+
+
+
+                    <!-- Export Data -->
+                    <div class="glass-card"
+                        style="padding: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;"
+                        id="exportPdfBtn">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="icon-box" style="background: rgba(255, 112, 67, 0.2); color: #FF7043;">
+                                <ion-icon name="document-text"></ion-icon>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 16px;">Export PDF Report</div>
+                                <div style="font-size: 13px; color: var(--text-secondary);">Summary & Statements</div>
+                            </div>
+                        </div>
+                        <ion-icon name="chevron-forward" style="color: var(--text-secondary);"></ion-icon>
+                    </div>
+
+                    <!-- Export JSON -->
+                    <div class="glass-card"
+                        style="padding: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;"
+                        id="exportDataBtn">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="icon-box" style="background: rgba(66, 165, 245, 0.2); color: #42A5F5;">
+                                <ion-icon name="cloud-download"></ion-icon>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 16px;">Backup Data</div>
+                                <div style="font-size: 13px; color: var(--text-secondary);">Download JSON backup</div>
+                            </div>
+                        </div>
+                        <ion-icon name="chevron-forward" style="color: var(--text-secondary);"></ion-icon>
+                    </div>
+
+                    <!-- Reset Data -->
+                    <div class="glass-card"
+                        style="padding: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;"
+                        id="resetDataBtn">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="icon-box" style="background: rgba(239, 83, 80, 0.2); color: #EF5350;">
+                                <ion-icon name="trash"></ion-icon>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 16px; color: #EF5350;">Reset All Data</div>
+                                <div style="font-size: 13px; color: var(--text-secondary);">Clear storage & restart
+                                </div>
+                            </div>
+                        </div>
+                        <ion-icon name="chevron-forward" style="color: var(--text-secondary);"></ion-icon>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 40px;">
+                        <span style="font-size: 12px; color: var(--text-secondary); opacity: 0.6;">BOYS Tracker
+                            v1.0.0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions Container (Home View) -->
+            <div id="homeView" class="view-container">
+                <div class="section-header" style="margin-bottom: 12px;">
+                    <span>Recent Transactions</span>
+                    <button class="view-all">View All</button>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="note-container" style="margin: 0 24px 16px; padding: 0; position: relative;">
+                    <ion-icon name="search"
+                        style="position: absolute; left: 16px; top: 14px; color: var(--text-secondary); font-size: 18px;"></ion-icon>
+                    <input type="text" id="searchInput" class="note-input" placeholder="Search transactions..."
+                        style="text-align: left; padding-left: 44px; background: rgba(255,255,255,0.6); backdrop-filter: blur(10px);">
+                </div>
+
+                <div class="transaction-list">
+                    <!-- Empty state placeholder (hidden by default) -->
+                    <div class="empty-state" style="display: none;">
+                        <p>No expenses yet today - treat yourself?</p>
+                    </div>
+                </div>
+                </section>
+
+                <!-- Spacer for Bottom Nav -->
+                <div class="bottom-spacer"></div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav glass-nav">
+            <button class="nav-item active" name="home" aria-label="Home Dashboard">
+                <ion-icon name="home"></ion-icon>
+            </button>
+            <button class="nav-item" name="bar-chart" aria-label="Statistics">
+                <ion-icon name="stats-chart"></ion-icon>
+            </button>
+
+            <!-- FAB Container -->
+            <div class="fab-container">
+                <button class="fab" id="addExpenseBtn" aria-label="Add Expense">
+                    <ion-icon name="add"></ion-icon>
+                </button>
+            </div>
+
+            <button class="nav-item" name="wallet" aria-label="Wallet Budget">
+                <ion-icon name="wallet"></ion-icon>
+            </button>
+            <button class="nav-item" name="settings" aria-label="Settings">
+                <ion-icon name="person"></ion-icon>
+            </button>
+        </nav>
+
+        <!-- Modal Overlay -->
+        <div class="modal-overlay" id="expenseModal">
+            <div class="modal-glass">
+                <div class="modal-header">
+                    <h3>Add Expense</h3>
+                    <button class="close-modal" id="closeExpenseBtn">
+                        <ion-icon name="close"></ion-icon>
+                    </button>
+                </div>
+
+                <div class="input-area">
+                    <span class="currency-symbol">₹</span>
+                    <input type="text" class="amount-input" value="0" readonly>
+                </div>
+
+                <!-- Remarks Input -->
+                <div class="note-container">
+                    <input type="text" class="note-input" placeholder="Add a remark..." id="expenseNote">
+                </div>
+
+                <div class="input-actions">
+                    <button class="action-chip" id="micInputBtn" aria-label="Voice Input"><ion-icon
+                            name="mic"></ion-icon></button>
+                    <button class="action-chip" id="cameraInputBtn" aria-label="Scan Receipt"><ion-icon
+                            name="camera"></ion-icon></button>
+                </div>
+
+                <div class="category-grid">
+                    <!-- Chips injected by JS -->
+                </div>
+
+                <!-- One-handed Numeric Keypad -->
+                <div class="numpad">
+                    <button class="num-key">1</button>
+                    <button class="num-key">2</button>
+                    <button class="num-key">3</button>
+                    <button class="num-key">4</button>
+                    <button class="num-key">5</button>
+                    <button class="num-key">6</button>
+                    <button class="num-key">7</button>
+                    <button class="num-key">8</button>
+                    <button class="num-key">9</button>
+                    <button class="num-key dot">.</button>
+                    <button class="num-key">0</button>
+                    <button class="num-key backspace" aria-label="Backspace"><ion-icon
+                            name="backspace"></ion-icon></button>
+                </div>
+
+                <button class="save-btn" id="saveExpenseBtn">Save Expense</button>
+            </div>
+        </div>
+
+        <!-- Category Details Modal -->
+        <div class="modal-overlay" id="categoryModal">
+            <div class="modal-glass" style="height: 80vh;">
+                <div class="modal-header">
+                    <h3 id="categoryModalTitle">Category Details</h3>
+                    <button class="close-modal" id="closeCategoryBtn">
+                        <ion-icon name="close"></ion-icon>
+                    </button>
+                </div>
+                <div class="transaction-list" id="categoryTransactionList"
+                    style="overflow-y: auto; max-height: calc(80vh - 100px);">
+                    <!-- Items will be injected here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

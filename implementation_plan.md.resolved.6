@@ -1,0 +1,91 @@
+# Implementation Plan - BOYS Expense Tracker
+
+## Goal Description
+Build a "stunning" high-fidelity mobile web application prototype for the "BOYS" expense tracker. The app will visually match the generated Glassmorphism design, featuring a daily dashboard, transaction list, and distinct "BOYS" branding (Mint Green/Soft Coral).
+
+## User Review Required
+> [!NOTE]
+> This is a frontend prototype. Data persistence and backend integration are out of scope. The focus is on Visual Excellence and UI interactions.
+
+## Proposed Changes
+
+### Core Structure
+#### [NEW] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Main container simulating a mobile device frame (for desktop viewing) or full width (on mobile).
+- Semantic sections: `<header>`, `<main>`, `<nav>`, `<aside>` (for modals).
+- Use of SVG icons for lightweight and crisp visuals.
+
+#### [NEW] [styles.css](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css)
+- **Design System**:
+    - Colors: Mint Green (`#E0F2F1`, `#26A69A`), Soft Coral (`#FFEBEE`, `#EF5350`), Gradient Backgrounds.
+    - Glassmorphism: `backdrop-filter: blur(10px)`, semi-transparent white backgrounds with border details.
+    - Typography: System fonts (SF Pro equivalent) for that native iOS feel.
+- **Layout**: Flexbox and Grid for component alignment.
+- **Animations**: Soft transitions for hover states, modal appearance, and list loading.
+
+#### [NEW] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Event listeners for Floating Action Button (FAB) to open "Add Expense" modal.
+- Tab switching logic (Daily/Monthly/Yearly) to toggle visible content.
+- Simple ripple or click effects for feedback.
+
+### Key Components to Build
+1.  **Dashboard Header**: App branding and Notification icon.
+2.  **Summary Cards**:
+    - "Today's Spending" card (Large number, comparison).
+    - "Budget" circular indicator (CSS Conic gradients).
+3.  **Transactions List**:
+    - Individual list items with Icon circle, Title, Subtitle (time), and Amount (color-coded).
+4.  **Bottom Navigation**:
+    - Fixed position container.
+    - Glassmorphism effect.
+    - Central FAB with subtle shadow/glow.
+5.  **Add Expense Modal**:
+    - Slide-up bottom sheet or centered overlay.
+    - Numeric keypad layout.
+
+## Verification Plan
+### Automated Tests
+- None planned for this visual prototype.
+
+### Manual Verification
+- **Visual Check**: Open [index.html](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html) in the browser tool to verify layout matches the "stunning" prompt description.
+- **Interaction**: Click FAB to ensure Modal opens. Click Tabs to verify active state changes.
+- **Responsiveness**: Ensure it looks good on the simulated mobile viewport.
+
+## Phase 5: Edit & Delete Actions
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- **Delete**: Remove item from `state.transactions`, re-render dashboard and current modal list.
+- **Edit**:
+    - Add `state.editingId` tracking.
+    - [startEdit(id)](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#83-102): Find transaction, fill form inputs, open modal, change "Save" button text to "Update".
+    - [saveTransaction](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#212-269): Check `state.editingId`. If set, update existing object; else create new.
+
+## Phase 6: Persistence & Filtering
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- **LocalStorage**:
+    - `saveState()`: Serialize `state.transactions` to `localStorage`.
+    - `loadState()`: Read from `localStorage` on load.
+- **Filtering**:
+    - Track `state.currentView` ('daily', 'monthly', 'yearly').
+    - Update `toggleBtns` listeners to change `state.currentView`.
+    - `getFilteredTransactions()`: Return transactions that match the current view's time range (e.g., today, this month).
+    - Update [renderTransactions](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#157-211) and [updateDashboard](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js#52-66) to use filtered data.
+
+### [MODIFY] [styles.css](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css)
+- No major changes, just ensure toggle states look correct.
+
+## Phase 7: Stats View
+### [MODIFY] [index.html](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)
+- Add `<div id="statsView" class="view-container" style="display:none;">`.
+- Add simplified chart structure (using CSS flex bars).
+
+### [MODIFY] [styles.css](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css)
+- Style the Stats container.
+- Create `.bar-chart` styles with animated bars.
+
+### [MODIFY] [app.js](file:///C:/Users/Subrata Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js)
+- Update Bottom Nav listeners to toggle `display: block/none` for `#homeView` and `#statsView`.
+- `renderStats()`: Calculate totals per category and set bar heights/colors.
+
+
+

@@ -1,0 +1,43 @@
+# BOYS Expense Tracker - Walkthrough
+
+I have successfully built the high-fidelity **BOYS Expense Tracker** prototype. The visual style follows the "Glassmorphism" trend with a Mint Green and Soft Coral palette, as requested.
+
+## Completed Features
+- **Dashboard**: "Today's Spending" card and a CSS-based circular Budget Chart.
+- **Glassmorphism UI**: Frosted glass effects on cards and the bottom navigation bar.
+- **Transactions List**: Clean list with category icons, timestamps, and amounts.
+- **Visual Polish**: Gradient backgrounds, Inter typography, and iOS-style status bar placeholder.
+- **Interactive Elements**:
+    - **Add Expense Modal**: Floating Action Button (FAB) opens a full-screen glass modal.
+    - **Numpad**: Custom styling for numeric input.
+    - **View Toggles**: Daily, Monthly, and Yearly filters now work!
+
+## Functional Updates (Final Phase)
+The app is now **Production Ready** (Local):
+- **Stats View**: Click the **Bar Chart** icon in the navbar.
+- **Budget Control**: Click the **Wallet** icon. Set your own daily budget (e.g., ₹500).
+- **Settings & Backup**: Click the **Settings** icon to Export or Reset data.
+- **Custom Categories**: Click the **+ chip** in the modal to add your own.
+- **Smart Shortcuts (Mock)**:
+    - **Mic Button**: Simulates voice input (Auto-fills "Coffee with friends").
+    - **Camera Button**: Simulates receipt scan (Auto-fills "450.00").
+- **Persistence**: All data (expenses + budget + categories) is saved locally.
+- **Time Filters**: Smart filtering by Day/Month/Year.
+- **Polish**: Smooth fade-in animations when switching views and full Accessibility (ARIA) support.
+- **Support**: Integrated Help option in Settings.
+
+## How to Test
+1.  **Open [index.html](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html)**: Open the file in Chrome, Safari, or Edge.
+2.  **Test Smart Shortcuts**:
+    - Click **+ (FAB)**.
+    - Click the **Microphone** icon. Watch it listen and type for you!
+    - Click the **Camera** icon. Watch it scan and extract the amount!
+3.  **Test Everything Else**:
+    - Add real expenses, create categories, check your stats, and stick to your budget.
+    - Notice the smooth fade animation when you click the bottom nav icons!
+    - Check the **Settings** view for the new "Help & Support" button.
+
+## Files Created
+- [index.html](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/index.html) - Application structure.
+- [styles.css](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/styles.css) - All styling, variables, and animations.
+- [app.js](file:///C:/Users/Subrata%20Das/.gemini/antigravity/brain/861e764a-99a8-4932-a16c-0fb431fca6ff/app.js) - UI Logic.
